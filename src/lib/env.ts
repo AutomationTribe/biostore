@@ -1,26 +1,26 @@
 import { z } from "zod";
 
 const envSchema = z.object({
-  // Supabase
+  // Supabase (required)
   NEXT_PUBLIC_SUPABASE_URL: z.string().url(),
   NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(1),
   SUPABASE_SERVICE_ROLE_KEY: z.string().min(1),
 
-  // Stripe
-  NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z.string().min(1),
-  STRIPE_SECRET_KEY: z.string().min(1),
-  STRIPE_WEBHOOK_SECRET: z.string().min(1),
+  // Stripe (optional for development)
+  NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z.string().min(1).optional(),
+  STRIPE_SECRET_KEY: z.string().min(1).optional(),
+  STRIPE_WEBHOOK_SECRET: z.string().min(1).optional(),
 
-  // Paystack
-  NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY: z.string().min(1),
-  PAYSTACK_SECRET_KEY: z.string().min(1),
-  PAYSTACK_WEBHOOK_SECRET: z.string().min(1),
+  // Paystack (optional for development)
+  NEXT_PUBLIC_PAYSTACK_PUBLIC_KEY: z.string().min(1).optional(),
+  PAYSTACK_SECRET_KEY: z.string().min(1).optional(),
+  PAYSTACK_WEBHOOK_SECRET: z.string().min(1).optional(),
 
-  // Resend
-  RESEND_API_KEY: z.string().min(1),
+  // Resend (optional for development)
+  RESEND_API_KEY: z.string().min(1).optional(),
 
-  // Anthropic
-  ANTHROPIC_API_KEY: z.string().min(1),
+  // Anthropic (optional for development)
+  ANTHROPIC_API_KEY: z.string().min(1).optional(),
 
   // App
   NEXT_PUBLIC_APP_URL: z.string().url(),
