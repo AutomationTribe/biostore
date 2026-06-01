@@ -23,8 +23,8 @@ const envSchema = z.object({
   ANTHROPIC_API_KEY: z.string().min(1).optional(),
 
   // App
-  NEXT_PUBLIC_APP_URL: z.string().url(),
-  NODE_ENV: z.enum(["development", "production", "test"]),
+  NEXT_PUBLIC_APP_URL: z.string().url().optional(),
+  NODE_ENV: z.enum(["development", "production", "test"]).optional(),
 });
 
 export type Env = z.infer<typeof envSchema>;
@@ -52,7 +52,7 @@ export function getEnv(): Env {
     RESEND_API_KEY: process.env.RESEND_API_KEY,
     ANTHROPIC_API_KEY: process.env.ANTHROPIC_API_KEY,
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
-    NODE_ENV: process.env.NODE_ENV || "development",
+    NODE_ENV: process.env.NODE_ENV,
   };
 
   try {
@@ -71,5 +71,17 @@ export function getEnv(): Env {
   }
 }
 
-/** Singleton environment object for convenience */
-export const env = getEnv();
+/** Lazy-loaded environment - validates on first access */
+export const env = new Proxy(
+  { _initialized: false },
+  {
+    get: (target: any, prop: string | symbol) => {
+      if (!target._initialized) {
+        const validated = getEnv();
+        Object.assign(target, validated);
+        target._initialized = true;
+      }
+      return target[prop];
+    },
+  }
+) as Env;

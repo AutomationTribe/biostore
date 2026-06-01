@@ -31,20 +31,20 @@ declare namespace __next_route_internal_types__ {
   type StaticRoutes = 
     | `/signup`
     | `/login`
-    | `/api/analytics`
-    | `/api/auth/login`
-    | `/api/links`
-    | `/api/auth/signup`
-    | `/api/payments/webhooks`
-    | `/api/products`
     | `/api/agents/onboarding`
+    | `/api/auth/login`
+    | `/api/analytics`
+    | `/api/auth/signup`
+    | `/api/links`
     | `/`
+    | `/api/products`
     | `/api/payments/checkout`
+    | `/api/payments/webhooks`
+    | `/dashboard`
+    | `/settings`
     | `/appearance`
     | `/store`
-    | `/dashboard`
     | `/links`
-    | `/settings`
   type DynamicRoutes<T extends string = string> = 
     | `/${SafeSlug<T>}`
 
