@@ -167,6 +167,26 @@ See `docs/agent-pipeline.md` for implementation details.
 5. **Naming** — follow existing patterns (camelCase for functions/variables, PascalCase for types)
 6. **Testing** — all service functions have unit tests in `__tests__/` directories
 
+## JSX Text Rules
+
+**Never use raw apostrophes or quotes inside JSX text content.** Always use `&apos;` for apostrophes and `&quot;` for double quotes. This applies to all user-facing strings in `.tsx` and `.jsx` files — error messages, labels, placeholders, headings, and body copy.
+
+**Bad:**
+```jsx
+<p>Don't have an account?</p>
+<button>I'm ready</button>
+<label>Enter your "secret" code</label>
+```
+
+**Good:**
+```jsx
+<p>Don&apos;t have an account?</p>
+<button>I&apos;m ready</button>
+<label>Enter your &quot;secret&quot; code</label>
+```
+
+This prevents quote conflicts in JSX string parsing and ensures consistent rendering across browsers.
+
 ## Common Workflows
 
 ### Adding a New Module
