@@ -1,1 +1,20 @@
-{}
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/(auth)/login/page": "app/(auth)/login/page.js",
+  "/(auth)/signup/page": "app/(auth)/signup/page.js",
+  "/api/agents/onboarding/route": "app/api/agents/onboarding/route.js",
+  "/api/auth/login/route": "app/api/auth/login/route.js",
+  "/api/analytics/route": "app/api/analytics/route.js",
+  "/api/auth/signup/route": "app/api/auth/signup/route.js",
+  "/api/links/route": "app/api/links/route.js",
+  "/api/payments/checkout/route": "app/api/payments/checkout/route.js",
+  "/api/payments/webhooks/route": "app/api/payments/webhooks/route.js",
+  "/page": "app/page.js",
+  "/api/products/route": "app/api/products/route.js",
+  "/[username]/page": "app/[username]/page.js",
+  "/(dashboard)/appearance/page": "app/(dashboard)/appearance/page.js",
+  "/(dashboard)/links/page": "app/(dashboard)/links/page.js",
+  "/(dashboard)/dashboard/page": "app/(dashboard)/dashboard/page.js",
+  "/(dashboard)/store/page": "app/(dashboard)/store/page.js",
+  "/(dashboard)/settings/page": "app/(dashboard)/settings/page.js"
+}

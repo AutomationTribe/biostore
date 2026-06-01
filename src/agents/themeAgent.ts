@@ -61,7 +61,7 @@ export async function themeAgent(
   input: ThemeAgentInput
 ): Promise<ThemeAgentOutput> {
   try {
-    const { context, bio } = input;
+    const { context } = input;
 
     // Simple heuristic for theme selection based on creator category
     let selectedTheme = THEMES.professional;

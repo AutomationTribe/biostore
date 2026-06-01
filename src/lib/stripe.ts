@@ -6,5 +6,5 @@ import { env } from "@/lib/env";
  * Initialized with secret key for server-side operations
  */
 export const stripe = new Stripe(env.STRIPE_SECRET_KEY, {
-  apiVersion: "2024-04-10",
+  apiVersion: "2023-10-16",
 });

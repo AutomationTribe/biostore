@@ -3,15 +3,38 @@
  * All errors thrown should be instances of AppError.
  */
 export class AppError extends Error {
+  code: string;
+  status: number;
+  details?: Record<string, unknown>;
+
   constructor(
-    public code: string,
+    code: string,
     message: string,
-    public status: number = 500,
-    public details?: Record<string, unknown>
+    status: number = 500,
+    details?: Record<string, unknown>
   ) {
     super(message);
     this.name = "AppError";
+    this.code = code;
+    this.status = status;
+    this.details = details;
   }
+
+  toJSON() {
+    return {
+      code: this.code,
+      message: this.message,
+      status: this.status,
+      details: this.details,
+    };
+  }
+}
+
+/**
+ * Type guard to check if an error is an AppError
+ */
+export function isAppError(error: unknown): error is AppError {
+  return error instanceof AppError;
 }
 
 // Common error codes
@@ -25,6 +48,10 @@ export const ERROR_CODES = {
 
   // Profile
   PROFILE_NOT_FOUND: "PROFILE_NOT_FOUND",
+
+  // Store/Products
+  PRODUCT_NOT_FOUND: "PRODUCT_NOT_FOUND",
+  PURCHASE_NOT_FOUND: "PURCHASE_NOT_FOUND",
 
   // Validation
   VALIDATION_ERROR: "VALIDATION_ERROR",
@@ -43,4 +70,11 @@ export const ERROR_CODES = {
 
   // Server
   INTERNAL_ERROR: "INTERNAL_ERROR",
+  INTERNAL_SERVER_ERROR: "INTERNAL_ERROR", // Alias
 } as const;
+
+/** Type for error codes */
+export type ErrorCodeType = typeof ERROR_CODES[keyof typeof ERROR_CODES];
+
+/** Alias for backward compatibility with existing code that expects ErrorCode as the object */
+export { ERROR_CODES as ErrorCode };

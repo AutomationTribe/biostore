@@ -1,10 +1,10 @@
 import { createServerClient } from "@/lib/supabase/server";
 import { env } from "@/lib/env";
+import { constructStripeWebhookEvent } from "@/modules/payments/providers/stripe";
 import {
-  constructStripeWebhookEvent,
   verifyPaystackWebhookSignature,
   parsePaystackWebhookPayload,
-} from "@/modules/payments/providers/stripe";
+} from "@/modules/payments/providers/paystack";
 import { handleWebhook } from "@/modules/payments/service";
 
 /**
@@ -66,7 +66,12 @@ export async function POST(
         env.STRIPE_WEBHOOK_SECRET
       );
 
-      await handleWebhook(supabase, "stripe", event.type, event.data.object);
+      await handleWebhook(
+        supabase,
+        "stripe",
+        event.type,
+        event.data.object as Record<string, unknown>
+      );
 
       return Response.json({ received: true });
     }

@@ -27,7 +27,7 @@ const envSchema = z.object({
   NODE_ENV: z.enum(["development", "production", "test"]),
 });
 
-type Env = z.infer<typeof envSchema>;
+export type Env = z.infer<typeof envSchema>;
 
 let cachedEnv: Env | null = null;
 
@@ -70,3 +70,6 @@ export function getEnv(): Env {
     throw error;
   }
 }
+
+/** Singleton environment object for convenience */
+export const env = getEnv();

@@ -86,7 +86,7 @@ export class AgentExecutionError extends Error {
   constructor(
     readonly agentName: string,
     message: string,
-    readonly originalError?: unknown
+    readonly _originalError?: unknown
   ) {
     super(`[${agentName}] ${message}`);
     Object.setPrototypeOf(this, AgentExecutionError.prototype);

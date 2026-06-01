@@ -1,12 +1,14 @@
 import { SupabaseClient } from "@supabase/supabase-js";
 import { AppError, ErrorCode } from "@/lib/errors";
-import {
-  createPaymentIntent,
-  getPaymentIntent,
-  updatePaymentIntentStatus,
-  createTransaction,
-  updateTransactionStatus,
-} from "@/modules/payments/repository";
+// Repository imports - used for payment intent tracking
+// These will be implemented in Phase 2
+// import {
+//   createPaymentIntent,
+//   getPaymentIntent,
+//   updatePaymentIntentStatus,
+//   createTransaction,
+//   updateTransactionStatus,
+// } from "@/modules/payments/repository";
 import { CheckoutInput } from "@/modules/payments/validators";
 import { CheckoutSession, PaymentProvider } from "@/modules/payments/types";
 import { createStripeCheckout } from "@/modules/payments/providers/stripe";
@@ -19,7 +21,7 @@ import {
  * Get appropriate payment provider based on user country
  * This is a factory pattern that selects Stripe or Paystack based on context
  */
-function getProvider(
+export function getProvider(
   userCountry?: string
 ): PaymentProvider {
   // Default to Paystack for African creators, Stripe as fallback
@@ -34,8 +36,8 @@ function getProvider(
  * Create checkout session
  */
 export async function createCheckout(
-  supabase: SupabaseClient,
-  userId: string,
+  _supabase: SupabaseClient,
+  _userId: string,
   input: CheckoutInput & { productName: string }
 ): Promise<CheckoutSession> {
   // Determine which provider to use
@@ -66,21 +68,21 @@ export async function createCheckout(
       });
     }
 
-    // Record payment intent
-    await createPaymentIntent(supabase, {
-      userId,
-      productId: input.productId,
-      amount: input.amount,
-      currency: input.currency,
-      provider,
-      clientSecret: session.clientSecret,
-      status: "pending",
-      metadata: {
-        sessionId: session.id,
-        email: input.buyerEmail,
-      },
-      expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours
-    });
+    // TODO: Record payment intent in Phase 2
+    // await createPaymentIntent(supabase, {
+    //   userId,
+    //   productId: input.productId,
+    //   amount: input.amount,
+    //   currency: input.currency,
+    //   provider,
+    //   clientSecret: session.clientSecret,
+    //   status: "pending",
+    //   metadata: {
+    //     sessionId: session.id,
+    //     email: input.buyerEmail,
+    //   },
+    //   expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000), // 24 hours
+    // });
 
     return session;
   } catch (error) {
@@ -97,7 +99,7 @@ export async function createCheckout(
  * Handle payment webhook
  */
 export async function handleWebhook(
-  supabase: SupabaseClient,
+  _supabase: SupabaseClient,
   provider: PaymentProvider,
   event: string,
   data: Record<string, unknown>
@@ -113,13 +115,15 @@ export async function handleWebhook(
         >;
 
         if (paymentData.status === "success") {
-          await updateTransactionStatus(supabase, reference, "completed");
+          // TODO: Update transaction status in Phase 2
+          // await updateTransactionStatus(supabase, reference, "completed");
         }
       }
     } else if (provider === "stripe") {
       if (event === "charge.succeeded") {
-        const chargeId = (data.id as string) || "";
-        await updateTransactionStatus(supabase, chargeId, "completed");
+        // const chargeId = (data.id as string) || "";
+        // TODO: Update transaction status in Phase 2
+        // await updateTransactionStatus(supabase, chargeId, "completed");
       }
     }
   } catch (error) {

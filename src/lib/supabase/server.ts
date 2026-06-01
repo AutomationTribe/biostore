@@ -18,7 +18,9 @@ export async function createServerSupabaseClient() {
         getAll() {
           return cookieStore.getAll();
         },
-        setAll(cookiesToSet) {
+        setAll(
+          cookiesToSet: Array<{ name: string; value: string; options?: Record<string, unknown> }>
+        ) {
           try {
             cookiesToSet.forEach(({ name, value, options }) =>
               cookieStore.set(name, value, options)
@@ -55,3 +57,7 @@ export function createAdminSupabaseClient() {
     }
   );
 }
+
+// Aliases for existing code compatibility
+export { createServerSupabaseClient as createServerClient };
+export { createAdminSupabaseClient as createAdminClient };
