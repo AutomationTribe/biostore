@@ -29,22 +29,22 @@ declare namespace __next_route_internal_types__ {
     S extends `${string}${SearchOrHash}` ? never : S
 
   type StaticRoutes = 
-    | `/`
-    | `/login`
     | `/signup`
+    | `/login`
+    | `/api/analytics`
+    | `/api/auth/login`
+    | `/api/links`
+    | `/api/auth/signup`
+    | `/api/payments/webhooks`
+    | `/api/products`
+    | `/api/agents/onboarding`
+    | `/`
+    | `/api/payments/checkout`
     | `/appearance`
-    | `/dashboard`
     | `/store`
+    | `/dashboard`
     | `/links`
     | `/settings`
-    | `/api/analytics`
-    | `/api/agents/onboarding`
-    | `/api/auth/login`
-    | `/api/auth/signup`
-    | `/api/links`
-    | `/api/products`
-    | `/api/payments/webhooks`
-    | `/api/payments/checkout`
   type DynamicRoutes<T extends string = string> = 
     | `/${SafeSlug<T>}`
 

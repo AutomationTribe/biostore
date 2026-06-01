@@ -37,6 +37,13 @@ export async function POST(
         );
       }
 
+      if (!env.PAYSTACK_WEBHOOK_SECRET) {
+        return Response.json(
+          { error: "Paystack webhook secret not configured" },
+          { status: 503 }
+        );
+      }
+
       if (
         !verifyPaystackWebhookSignature(body, paystackSignature)
       ) {
@@ -57,6 +64,13 @@ export async function POST(
         return Response.json(
           { error: "Missing signature" },
           { status: 401 }
+        );
+      }
+
+      if (!env.STRIPE_WEBHOOK_SECRET) {
+        return Response.json(
+          { error: "Stripe webhook secret not configured" },
+          { status: 503 }
         );
       }
 

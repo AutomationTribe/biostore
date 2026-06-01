@@ -13,6 +13,10 @@ export async function createStripeCheckout(input: {
   successUrl: string;
   cancelUrl: string;
 }): Promise<CheckoutSession> {
+  if (!stripe) {
+    throw new Error("Stripe API key not configured");
+  }
+
   const session = await stripe.checkout.sessions.create({
     payment_method_types: ["card"],
     line_items: [
@@ -49,6 +53,10 @@ export async function createStripeCheckout(input: {
  * Retrieve Stripe session
  */
 export async function getStripeSession(sessionId: string) {
+  if (!stripe) {
+    throw new Error("Stripe API key not configured");
+  }
+
   return stripe.checkout.sessions.retrieve(sessionId);
 }
 
@@ -60,5 +68,9 @@ export async function constructStripeWebhookEvent(
   signature: string,
   secret: string
 ) {
+  if (!stripe) {
+    throw new Error("Stripe API key not configured");
+  }
+
   return stripe.webhooks.constructEvent(body, signature, secret);
 }

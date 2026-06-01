@@ -13,6 +13,10 @@ export async function bioAgent(
   input: BioAgentInput
 ): Promise<BioAgentOutput> {
   try {
+    if (!anthropic) {
+      throw new Error("Anthropic API key not configured");
+    }
+
     const { context } = input;
 
     const prompt = `You are a creative writer helping African creators craft compelling bios for their link-in-bio pages.

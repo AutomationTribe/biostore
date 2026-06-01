@@ -3,6 +3,7 @@ import { env } from "@/lib/env";
 /**
  * Paystack API client
  * Configuration for Paystack payment provider
+ * All values may be undefined if not configured
  */
 export const paystackConfig = {
   secretKey: env.PAYSTACK_SECRET_KEY,

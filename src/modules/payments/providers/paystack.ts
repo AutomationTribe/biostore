@@ -14,6 +14,10 @@ export async function createPaystackCheckout(input: {
   successUrl: string;
   cancelUrl: string;
 }): Promise<CheckoutSession> {
+  if (!paystackConfig.secretKey) {
+    throw new Error("Paystack API key not configured");
+  }
+
   // Amount is in kobo (smallest unit), so multiply by 100
   const response = (await paystackRequest("/transaction/initialize", {
     method: "POST",
@@ -43,6 +47,10 @@ export async function createPaystackCheckout(input: {
  * Verify Paystack payment
  */
 export async function verifyPaystackPayment(reference: string) {
+  if (!paystackConfig.secretKey) {
+    throw new Error("Paystack API key not configured");
+  }
+
   return paystackRequest(`/transaction/verify/${reference}`, {
     method: "GET",
   });
@@ -55,6 +63,10 @@ export function verifyPaystackWebhookSignature(
   body: string,
   signature: string
 ): boolean {
+  if (!paystackConfig.webhookSecret) {
+    return false;
+  }
+
   const hash = crypto
     .createHmac("sha512", paystackConfig.webhookSecret)
     .update(body)
